@@ -1,4 +1,4 @@
-import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 
@@ -17,7 +17,10 @@ class _SignaturePadPageState extends State<SignaturePadPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Assinar")),
+      appBar: AppBar(
+          centerTitle: true, 
+          title: Text("Assinar"),
+          ),
       body: Column(
         children: [
           Expanded(
@@ -43,6 +46,7 @@ class _SignaturePadPageState extends State<SignaturePadPage> {
                   },
                   child: Text("Limpar"),
                 ),
+
                 ElevatedButton(
                   onPressed: () async {
                     final sign = _signKey.currentState;
@@ -55,33 +59,12 @@ class _SignaturePadPageState extends State<SignaturePadPage> {
                       );
                       return;
                     }
-
                     Navigator.pop(context, true); 
                   },
                   child: Text("Confirmar"),
                 ),
               ],
             )
-          else
-            Column(
-              children: [
-                Icon(Icons.check_circle, color: Colors.green, size: 60),
-                SizedBox(height: 10),
-                Text(
-                  "Assinatura realizada com sucesso!",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context, true);
-                  },
-                  child: Text("Voltar para Home"),
-                ),
-              ],
-            ),
-
-          SizedBox(height: 30),
         ],
       ),
     );
