@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/signature_pad.dart';
 
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -19,7 +20,8 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    if (resultado == true) {
+    if (resultado != null) {
+      print('Assinatura Base64 recebida: $resultado');
       setState(() {
         _assinou = true;
       });
