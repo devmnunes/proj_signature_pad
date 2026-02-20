@@ -1,9 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
+import '../widgets/signature_canvas.dart';
+import '../widgets/signature_actions.dart';
 
 class SignaturePadPage extends StatefulWidget {
-  const SignaturePadPage({Key? key}) : super(key: key);
+  const SignaturePadPage({super.key});
 
   @override
   State<SignaturePadPage> createState() => _SignaturePadPageState();
@@ -12,59 +13,25 @@ class SignaturePadPage extends StatefulWidget {
 class _SignaturePadPageState extends State<SignaturePadPage> {
   final GlobalKey<SignatureState> _signKey = GlobalKey();
 
-  bool _assinaturaConfirmada = false;
+  void _confirmSignature() {
+    Navigator.pop(context, true);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true, 
-          title: Text("Assinar"),
-          ),
+        centerTitle: true,
+        title: const Text("Assinar"),
+      ),
       body: Column(
         children: [
-          Expanded(
-            child: Container(
-              color: Colors.grey[300],
-              child: Signature(
-                key: _signKey,
-                color: Colors.black,
-                strokeWidth: 5.0,
-              ),
-            ),
+          SignatureCanvas(signKey: _signKey),
+          const SizedBox(height: 20),
+          SignatureActions(
+            signKey: _signKey,
+            onConfirm: _confirmSignature,
           ),
-
-          SizedBox(height: 20),
-
-          if (!_assinaturaConfirmada)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    _signKey.currentState?.clear();
-                  },
-                  child: Text("Limpar"),
-                ),
-
-                ElevatedButton(
-                  onPressed: () async {
-                    final sign = _signKey.currentState;
-
-                    if (sign == null || !sign.hasPoints) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Por favor, assine primeiro"),
-                        ),
-                      );
-                      return;
-                    }
-                    Navigator.pop(context, true); 
-                  },
-                  child: Text("Confirmar"),
-                ),
-              ],
-            )
         ],
       ),
     );

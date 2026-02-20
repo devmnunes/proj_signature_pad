@@ -11,6 +11,29 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool _assinou = false;
 
+  Future<void> _abrirAssinatura() async {
+    final resultado = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const SignaturePadPage(),
+      ),
+    );
+
+    if (resultado == true) {
+      setState(() {
+        _assinou = true;
+      });
+
+      showDialog(
+        context: context,
+        builder: (_) => const AlertDialog(
+          title: Text("Sucesso"),
+          content: Text("Assinatura realizada com sucesso!"),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,36 +48,9 @@ class _HomePageState extends State<HomePage> {
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(double.infinity, 50),
             ),
-            onPressed: _assinou
-                ? null
-                : () async {
-                    final resultado = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const SignaturePadPage(),
-                      ),
-                    );
-
-                    if (resultado == true) {
-                      setState(() {
-                        _assinou = true;
-                      });
-
-                      showDialog(
-                        context: context,
-                        builder: (_) => const AlertDialog(
-                          title: Text("Sucesso"),
-                          content: Text(
-                            "Assinatura realizada com sucesso!",
-                          ),
-                        ),
-                      );
-                    }
-                  },
+            onPressed: _assinou ? null : _abrirAssinatura,
             child: Text(
-              _assinou
-                  ? "Documento Assinado"
-                  : "Assinar Documento",
+              _assinou ? "Documento Assinado" : "Assinar Documento",
               style: const TextStyle(fontSize: 16),
             ),
           ),
