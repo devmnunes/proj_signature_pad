@@ -1,6 +1,6 @@
-# flutter_application_1
+# Prototipo Signature Pad
 
-A new Flutter project.
+Projeto com fins de estudo e aprindizagem.
 
 ## Getting Started
 
